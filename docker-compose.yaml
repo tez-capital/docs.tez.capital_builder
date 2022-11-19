@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+
+  site:
+    image: klakegg/hugo:ext-alpine
+    build:
+      context: .
+    command: server
+    ports:
+      - "2500:1313"
+    volumes:
+      - .:/src

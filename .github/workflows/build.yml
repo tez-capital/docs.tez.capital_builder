@@ -1,0 +1,48 @@
+name: build docs 
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: klakegg/hugo:ext-alpine
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          submodules: recursive
+
+      - name: mark safe
+        run: |
+          git config --global --add safe.directory '*'
+      
+      - name: cleanup
+        run: |
+          rm -rf public/*
+          rm -rf public/.git
+
+      - name: build
+        run: hugo
+
+      - name: cname 
+        run: |
+          printf docs.tez.capital > public/CNAME
+
+      - name: Get current date
+        id: date
+        run: |
+          echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          
+      - name: publish
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.DOCS_BUILDER_KEY }}
+          GITHUB_SHA: $GITHUB_SHA 
+        with:
+          source-directory: public/
+          destination-github-username: tez-capital
+          destination-repository-name: docs.tez.capital
+          user-email: docs-builder@tez.capital
+          commit-message: publish-${{ steps.date.outputs.date }}

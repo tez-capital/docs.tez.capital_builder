@@ -1,0 +1,88 @@
+# "https://docs.tez.capital/"
+baseURL: /
+languageCode: "en-us"
+title: "docs.tez.capital"
+sidebar_search_disable: false
+copyright: tez.capital
+
+github_repo: https://github.com/tez-capital/docs-tez-capital-builder
+github_branch: main
+
+enableMissingTranslationPlaceholders: true
+enableRobotsTXT: true
+enableGitInfo: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+# Highlighting config
+pygmentsCodeFences: true
+pygmentsUseClasses: false
+# Use the new Chroma Go highlighter in Hugo.
+pygmentsUseClassic: false
+#pygmentsOptions = "linenos=table"
+# See https://help.farbox.com/pygments.html
+pygmentsStyle: tango
+
+# offline search with lunr
+params:
+  algolia_docsearch: false
+  offlineSearch: true
+  offlineSearchSummaryLength: 200
+  offlineSearchMaxResults: 15
+
+  ui:
+    feedback:
+      enable: true
+      yes: Glad to hear it! Please <a href="https://github.com/tez-capital/docs-tez-capital-builder/issues/new">tell us how we can improve</a>.
+      no: Sorry to hear that. Please <a href="https://github.com/tez-capital/docs-tez-capital-builder/issues/new">tell us how we can improve</a>.
+    readingtime: 
+      enable: true
+
+
+  # links:
+  #   user:
+  #     - name: Discord
+  #       url: https://discord.gg/wDkPpMDFcn
+  #       icon: fab fa-discord
+
+  #   developer:
+  #     - name: Github
+  #       url: https://github.com/tez-capital
+  #       icon: fab fa-github
+  #       desc: Development takes place here!
+
+contentDir: content/en
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+
+languages:
+  en:
+    description: Documentation
+    languageName: English
+    weight: 1
+
+# menu:
+#   main:
+#     - name: "Home"
+#       identifier: "home"
+#       pre: "<i class='fa fa-home'></i>"
+#       url: "/"
+#       weight: 1
+#     # - name: "Documentation"
+#     #   identifier: "documentation"
+#     #   pre: "<i class='fa fa-book'></i>"
+#     #   url: "/documentation/"
+#     #   weight: 0
+
+module:
+  hugoVersion:
+    extended: true
+    min: 0.100.0
+  imports:
+    - path: github.com/google/docsy
+      disable: false
+    - path: github.com/google/docsy/dependencies
+      disable: false
