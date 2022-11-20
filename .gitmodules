@@ -10,3 +10,7 @@
 [submodule "projects/tezpay"]
 	path = projects/tezpay
 	url = git@github.com:tez-capital/tezpay.git
+	
+[submodule "content"]
+	path = content
+	url = git@github.com:tez-capital/docs.tez.capital_content.git
