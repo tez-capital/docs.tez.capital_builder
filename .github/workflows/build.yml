@@ -24,8 +24,8 @@ jobs:
         run: |
           # command reference
 
-          rm -rf content/reusable/tezpay/cmd/*
-          mkdir -p content/reusable/tezpay/cmd/
+          rm -rf content/injected/tezpay/cmd/*
+          mkdir -p content/injected/tezpay/cmd/
           export CWD=$PWD
           cd projects/tezpay/docs/cmd
           for f in *.md; do
@@ -35,13 +35,13 @@ jobs:
             echo "weight: 3";
             echo "type: docs";
             echo "---") | \
-            cat - $f > $CWD/content/reusable/tezpay/cmd/$f
+            cat - $f > $CWD/content/injected/tezpay/cmd/$f
           done
           cd $CWD
 
           # configuration samples
-          rm -rf content/reusable/tezpay/configuration/*
-          mkdir -p content/reusable/tezpay/configuration/
+          rm -rf content/injected/tezpay/configuration/*
+          mkdir -p content/injected/tezpay/configuration/
           cd projects/tezpay/docs/configuration
           for f in config.*.hjson; do
             echo "Processing $f file...";
@@ -52,8 +52,8 @@ jobs:
             echo "summary: tezpay $(printf $f | cut -d. -f2) configuration";
             echo "---";
             echo '```yaml') | \
-            cat - $f > $CWD/content/reusable/tezpay/configuration/$(printf $f | cut -d. -f2).md
-            (echo ''; echo '```') >> $CWD/content/reusable/tezpay/configuration/$(printf $f | cut -d. -f2).md
+            cat - $f > $CWD/content/injected/tezpay/configuration/$(printf $f | cut -d. -f2).md
+            (echo ''; echo '```') >> $CWD/content/injected/tezpay/configuration/$(printf $f | cut -d. -f2).md
           done
           cd $CWD
     
