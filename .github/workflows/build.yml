@@ -1,6 +1,8 @@
 name: build docs 
 
 on:
+  repository_dispatch:
+    types: ["subproject-updated"]
   push:
     branches:
       - main
@@ -34,6 +36,44 @@ jobs:
         id: date
         run: |
           echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+
+      - name: collect tp docs
+        run: |
+          # command reference
+
+          rm -rf content/reusable/tezpay/cmd/*
+          mkdir -p content/reusable/tezpay/cmd/
+          export CWD=$PWD
+          cd projects/tezpay/docs/cmd
+          for f in *.md; do
+            echo "Processing $f file...";
+            (echo "---";
+            echo "title: $(printf $f | cut -d. -f1)";
+            echo "weight: 3";
+            echo "type: docs";
+            echo "---") | \
+            cat - $f > $CWD/content/reusable/tezpay/cmd/$f
+          done
+          cd $CWD
+
+          # configuration samples
+          rm -rf content/reusable/tezpay/configuration/*
+          mkdir -p content/reusable/tezpay/configuration/
+          cd projects/tezpay/docs/configuration
+          for f in config.*.hjson; do
+            echo "Processing $f file...";
+            (echo "---";
+            echo "title: $(printf $f | cut -d. -f2)";
+            echo "weight: 3";
+            echo "type: docs";
+            echo "summary: tezpay $(printf $f | cut -d. -f2) configuration";
+            echo "---";
+            echo '```yaml') | \
+            cat - $f > $CWD/content/reusable/tezpay/configuration/$(printf $f | cut -d. -f2).md
+            (echo ''; echo '```') >> $CWD/content/reusable/tezpay/configuration/$(printf $f | cut -d. -f2).md
+          done
+          cd $CWD
+
           
       - name: publish
         uses: cpina/github-action-push-to-another-repository@main
