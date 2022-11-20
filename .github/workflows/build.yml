@@ -19,23 +19,6 @@ jobs:
       - name: mark safe
         run: |
           git config --global --add safe.directory '*'
-      
-      - name: cleanup
-        run: |
-          rm -rf public/*
-          rm -rf public/.git
-
-      - name: build
-        run: hugo
-
-      - name: cname 
-        run: |
-          printf docs.tez.capital > public/CNAME
-
-      - name: Get current date
-        id: date
-        run: |
-          echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
       - name: collect tp docs
         run: |
@@ -73,7 +56,23 @@ jobs:
             (echo ''; echo '```') >> $CWD/content/reusable/tezpay/configuration/$(printf $f | cut -d. -f2).md
           done
           cd $CWD
+    
+      - name: cleanup
+        run: |
+          rm -rf public/*
+          rm -rf public/.git
 
+      - name: build
+        run: hugo
+
+      - name: cname
+        run: |
+          printf docs.tez.capital > public/CNAME
+
+      - name: Get current date
+        id: date
+        run: |
+          echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
           
       - name: publish
         uses: cpina/github-action-push-to-another-repository@main
