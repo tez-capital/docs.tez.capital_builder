@@ -5,9 +5,6 @@ title: "docs.tez.capital"
 sidebar_search_disable: false
 copyright: tez.capital
 
-github_repo: https://github.com/tez-capital/docs-tez-capital-builder
-github_branch: main
-
 enableMissingTranslationPlaceholders: true
 enableRobotsTXT: true
 enableGitInfo: true
@@ -33,30 +30,39 @@ params:
   offlineSearchSummaryLength: 200
   offlineSearchMaxResults: 15
 
+  github_repo: https://github.com/tez-capital/docs.tez.capital_content
+  github_branch: main
+
   ui:
-    feedback:
-      enable: true
+    feedback: # requires GA
+      enable: false
       yes: Glad to hear it! Please <a href="https://github.com/tez-capital/docs-tez-capital-builder/issues/new">tell us how we can improve</a>.
       no: Sorry to hear that. Please <a href="https://github.com/tez-capital/docs-tez-capital-builder/issues/new">tell us how we can improve</a>.
     readingtime: 
-      enable: true
+      enable: false
 
+  links:
+    user:
+      - name: Discord
+        url: https://discord.gg/wDkPpMDFcn
+        icon: fab fa-discord
 
-  # links:
-  #   user:
-  #     - name: Discord
-  #       url: https://discord.gg/wDkPpMDFcn
-  #       icon: fab fa-discord
+      - name: Twitter
+        url: https://twitter.com/TezCapital
+        icon: fab fa-twitter
 
-  #   developer:
-  #     - name: Github
-  #       url: https://github.com/tez-capital
-  #       icon: fab fa-github
-  #       desc: Development takes place here!
+    developer:
+      - name: Github
+        url: https://github.com/tez-capital
+        icon: fab fa-github
+        desc: Development takes place here!
 
 contentDir: content/en
 defaultContentLanguage: en
 defaultContentLanguageInSubdir: false
+
+staticDir:
+  content/static
 
 languages:
   en:
