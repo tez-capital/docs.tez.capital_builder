@@ -22,7 +22,7 @@ jobs:
 
       - name: collect tp docs
         run: |
-          ./tools/inject.sh
+          sh ./tools/inject.sh
     
       - name: cleanup
         run: |
