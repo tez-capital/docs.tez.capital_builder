@@ -6,11 +6,14 @@
 [submodule "public"]
 	path = public
 	url = git@github.com:tez-capital/docs.tez.capital.git
+	branch = main
 
 [submodule "projects/tezpay"]
 	path = projects/tezpay
 	url = git@github.com:tez-capital/tezpay.git
-	
+	branch = main
+
 [submodule "content"]
 	path = content
 	url = git@github.com:tez-capital/docs.tez.capital_content.git
+	branch = main
