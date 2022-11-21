@@ -20,6 +20,15 @@ jobs:
         run: |
           git config --global --add safe.directory '*'
 
+      - name: update submodules
+        run: |
+          git submodule update --remote
+
+      - name: commit updated submodules
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: updated submodules
+
       - name: collect tp docs
         run: |
           sh ./tools/inject.sh
