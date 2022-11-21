@@ -30,9 +30,10 @@ params:
   offlineSearchSummaryLength: 200
   offlineSearchMaxResults: 15
 
+  github_project_repo: https://github.com/tez-capital/docs.tez.capital
   github_repo: https://github.com/tez-capital/docs.tez.capital_content
   github_branch: main
-  github_subdir: ..
+  path_base_for_github_subdir: "content"
 
   ui:
     feedback: # requires GA
