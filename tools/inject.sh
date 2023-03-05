@@ -33,3 +33,17 @@ for f in config.*.hjson; do
 	(echo ''; echo '```') >> "$CWD/content/injected/tezpay/configuration/$(printf $f | cut -d. -f2).md"
 done
 cd "$CWD" || exit 1
+
+# tezpay extensions samples
+rm -rf content/injected/tezpay/extensions/*
+mkdir -p content/injected/tezpay/extensions/
+cd projects/tezpay/docs/extensions || exit 1
+for f in *.md; do
+	echo "Processing $f file...";
+	(echo "---";
+	echo "title: $(printf "%s" "$f" | cut -d. -f1)";
+	echo "weight: 3";
+	echo "type: docs";
+	echo "---") | \
+	cat - "$f" > "$CWD/content/injected/tezpay/extensions/$f"
+done
