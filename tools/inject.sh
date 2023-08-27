@@ -47,12 +47,12 @@ for f in *.md; do
 	echo "---") | \
 	cat - "$f" > "$CWD/content/injected/tezpay/extensions/$f"
 done
+cd "$CWD" || exit 1
 
 # tezbake command reference
 
 rm -rf content/injected/tezbake/cmd/*
 mkdir -p content/injected/tezbake/cmd/
-export CWD=$PWD
 cd projects/tezbake/docs/cmd || exit 1
 for f in *.md; do
 	echo "Processing $f file...";

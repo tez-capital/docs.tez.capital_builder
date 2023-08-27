@@ -11,10 +11,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: klakegg/hugo:ext-alpine
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with: 
           submodules: recursive
+          token: ${{ secrets.TZC_RO_ACCESS_TOKEN }}
 
       - name: mark safe
         run: |
@@ -24,12 +30,7 @@ jobs:
         run: |
           git submodule update --remote
 
-      - name: commit updated submodules
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: updated submodules
-
-      - name: collect tp docs
+      - name: collect docs
         run: |
           sh ./tools/inject.sh
     
@@ -49,7 +50,7 @@ jobs:
         id: date
         run: |
           echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
-          
+
       - name: publish
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -61,3 +62,35 @@ jobs:
           destination-repository-name: docs.tez.capital
           user-email: docs-builder@tez.capital
           commit-message: publish-${{ steps.date.outputs.date }}
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --exit-code || echo "update_required=true" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: commit submodules
+        if: steps.check_changes.outputs.update_required == 'true'
+        run: |          
+          git add .
+          git commit -m "Update submodules"
+
+      - name: prepare path
+        if: steps.check_changes.outputs.update_required == 'true'
+        run: |
+          mkdir -p ./tmp/${{ github.repository }}
+
+      - name: Checkout wit GITHUB_TOKEN
+        if: steps.check_changes.outputs.update_required == 'true'
+        uses: actions/checkout@v3
+        with: 
+          submodules: false
+          path: ./tmp/${{ github.repository }}
+
+      - name: push changes with GITHUB_TOKEN
+        if: steps.check_changes.outputs.update_required == 'true'
+        working-directory: ./tmp/${{ github.repository }}
+        run: |
+          git remote add local_mirror $GITHUB_WORKSPACE
+          git pull local_mirror main
+          git push origin main
