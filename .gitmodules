@@ -17,3 +17,7 @@
 	path = content
 	url = git@github.com:tez-capital/docs.tez.capital_content.git
 	branch = main
+[submodule "projects/tezbake"]
+	path = projects/tezbake
+	url = git@github.com:tez-capital/tezbake.git
+	branch = main
